@@ -1,0 +1,676 @@
+{
+  "quizzes": {
+    "English": {
+      "questions": [
+        {
+          "id": 1,
+          "question": "What is the correct past participle of 'write'?",
+          "options": [
+            "Writed",
+            "Written",
+            "Wrote",
+            "Writing"
+          ],
+          "answer": "Written"
+        },
+        {
+          "id": 2,
+          "question": "Identify the figure of speech: 'The stars danced in the sky.'",
+          "options": [
+            "Simile",
+            "Metaphor",
+            "Personification",
+            "Hyperbole"
+          ],
+          "answer": "Personification"
+        },
+        {
+          "id": 3,
+          "question": "What type of sentence is this: 'Although it was raining, we went to the park.'?",
+          "options": [
+            "Simple",
+            "Compound",
+            "Complex",
+            "Compound-complex"
+          ],
+          "answer": "Complex"
+        },
+        {
+          "id": 4,
+          "question": "Choose the correct form: 'Neither of the students ___ ready for the exam.'",
+          "options": [
+            "were",
+            "was",
+            "are",
+            "have been"
+          ],
+          "answer": "was"
+        },
+        {
+          "id": 5,
+          "question": "What is the antonym of 'abundant'?",
+          "options": [
+            "Plentiful",
+            "Scarce",
+            "Numerous",
+            "Excessive"
+          ],
+          "answer": "Scarce"
+        },
+        {
+          "id": 6,
+          "question": "Identify the literary device: 'Life is like a box of chocolates.'",
+          "options": [
+            "Metaphor",
+            "Simile",
+            "Alliteration",
+            "Onomatopoeia"
+          ],
+          "answer": "Simile"
+        },
+        {
+          "id": 7,
+          "question": "What is the correct spelling of this word meaning 'to give up'?",
+          "options": [
+            "Surrender",
+            "Surender",
+            "Surrendor",
+            "Surander"
+          ],
+          "answer": "Surrender"
+        },
+        {
+          "id": 8,
+          "question": "In the sentence 'The brilliant student solved the difficult problem quickly,' what is the adverb?",
+          "options": [
+            "brilliant",
+            "student",
+            "difficult",
+            "quickly"
+          ],
+          "answer": "quickly"
+        },
+        {
+          "id": 9,
+          "question": "What point of view is used in: 'You should always study hard for your exams'?",
+          "options": [
+            "First person",
+            "Second person",
+            "Third person limited",
+            "Third person omniscient"
+          ],
+          "answer": "Second person"
+        },
+        {
+          "id": 10,
+          "question": "Choose the correct verb form: 'If I ___ rich, I would help the poor.'",
+          "options": [
+            "am",
+            "was",
+            "were",
+            "will be"
+          ],
+          "answer": "were"
+        },
+        {
+          "id": 11,
+          "question": "What is the main theme of Jose Rizal's 'Noli Me Tangere'?",
+          "options": [
+            "Love story",
+            "Social injustice during Spanish colonization",
+            "Adventure",
+            "Family relationships"
+          ],
+          "answer": "Social injustice during Spanish colonization"
+        },
+        {
+          "id": 12,
+          "question": "Identify the clause type: 'When the bell rings'",
+          "options": [
+            "Independent clause",
+            "Dependent clause",
+            "Noun clause",
+            "Relative clause"
+          ],
+          "answer": "Dependent clause"
+        },
+        {
+          "id": 13,
+          "question": "What is the synonym of 'indigenous'?",
+          "options": [
+            "Foreign",
+            "Native",
+            "Modern",
+            "Artificial"
+          ],
+          "answer": "Native"
+        },
+        {
+          "id": 14,
+          "question": "Choose the correct punctuation: 'Maria said ___ I will go to school tomorrow ___",
+          "options": [
+            ". .",
+            ", .",
+            ", ,",
+            "\", \"."
+          ],
+          "answer": "\", \"."
+        },
+        {
+          "id": 15,
+          "question": "What literary period is characterized by the use of English as medium of instruction in Philippine literature?",
+          "options": [
+            "Spanish Period",
+            "American Period",
+            "Japanese Period",
+            "Contemporary Period"
+          ],
+          "answer": "American Period"
+        },
+        {
+          "id": 16,
+          "question": "Identify the mood of the verb: 'Please close the door.'",
+          "options": [
+            "Indicative",
+            "Imperative",
+            "Subjunctive",
+            "Conditional"
+          ],
+          "answer": "Imperative"
+        },
+        {
+          "id": 17,
+          "question": "What is the correct plural form of 'analysis'?",
+          "options": [
+            "Analysises",
+            "Analyses",
+            "Analysis",
+            "Analyzis"
+          ],
+          "answer": "Analyses"
+        },
+        {
+          "id": 18,
+          "question": "In academic writing, which is the most formal transitional phrase?",
+          "options": [
+            "But",
+            "However",
+            "Though",
+            "So"
+          ],
+          "answer": "However"
+        },
+        {
+          "id": 19,
+          "question": "What type of conflict is shown in 'Man vs. Nature'?",
+          "options": [
+            "Internal conflict",
+            "External conflict",
+            "Character vs. Character",
+            "Character vs. Society"
+          ],
+          "answer": "External conflict"
+        },
+        {
+          "id": 20,
+          "question": "Choose the sentence with correct subject-verb agreement:",
+          "options": [
+            "The group of students are studying.",
+            "The group of students is studying.",
+            "The groups of student is studying.",
+            "The groups of student are studying."
+          ],
+          "answer": "The group of students is studying."
+        }
+      ]
+    },
+    "Math": {
+      "questions": [
+        {
+          "id": 1,
+          "question": "Solve for x: 3x + 7 = 22",
+          "options": [
+            "x = 3",
+            "x = 5",
+            "x = 7",
+            "x = 9"
+          ],
+          "answer": "x = 5"
+        },
+        {
+          "id": 2,
+          "question": "What is the area of a rectangle with length 12 cm and width 8 cm?",
+          "options": [
+            "20 cm²",
+            "40 cm²",
+            "96 cm²",
+            "160 cm²"
+          ],
+          "answer": "96 cm²"
+        },
+        {
+          "id": 3,
+          "question": "Find the slope of the line passing through points (2, 4) and (6, 12).",
+          "options": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "answer": "2"
+        },
+        {
+          "id": 4,
+          "question": "What is 15% of 240?",
+          "options": [
+            "24",
+            "30",
+            "36",
+            "42"
+          ],
+          "answer": "36"
+        },
+        {
+          "id": 5,
+          "question": "Solve: (-5)² + 3 × 4",
+          "options": [
+            "17",
+            "27",
+            "37",
+            "47"
+          ],
+          "answer": "37"
+        },
+        {
+          "id": 6,
+          "question": "What is the circumference of a circle with radius 7 cm? (Use π = 22/7)",
+          "options": [
+            "22 cm",
+            "44 cm",
+            "66 cm",
+            "88 cm"
+          ],
+          "answer": "44 cm"
+        },
+        {
+          "id": 7,
+          "question": "Factor completely: x² - 9",
+          "options": [
+            "(x - 3)(x - 3)",
+            "(x + 3)(x + 3)",
+            "(x - 3)(x + 3)",
+            "Cannot be factored"
+          ],
+          "answer": "(x - 3)(x + 3)"
+        },
+        {
+          "id": 8,
+          "question": "A shirt originally costs ₱800. If it's marked down by 25%, what is the sale price?",
+          "options": [
+            "₱600",
+            "₱620",
+            "₱650",
+            "₱700"
+          ],
+          "answer": "₱600"
+        },
+        {
+          "id": 9,
+          "question": "What is the volume of a cube with side length 5 cm?",
+          "options": [
+            "25 cm³",
+            "75 cm³",
+            "100 cm³",
+            "125 cm³"
+          ],
+          "answer": "125 cm³"
+        },
+        {
+          "id": 10,
+          "question": "Solve the inequality: 2x - 5 > 7",
+          "options": [
+            "x > 1",
+            "x > 6",
+            "x < 1",
+            "x < 6"
+          ],
+          "answer": "x > 6"
+        },
+        {
+          "id": 11,
+          "question": "What is the median of the data set: 12, 15, 18, 20, 22, 25, 30?",
+          "options": [
+            "18",
+            "20",
+            "22",
+            "25"
+          ],
+          "answer": "20"
+        },
+        {
+          "id": 12,
+          "question": "Express 0.75 as a fraction in lowest terms:",
+          "options": [
+            "75/100",
+            "15/20",
+            "3/4",
+            "6/8"
+          ],
+          "answer": "3/4"
+        },
+        {
+          "id": 13,
+          "question": "What is the sum of interior angles of a pentagon?",
+          "options": [
+            "360°",
+            "540°",
+            "720°",
+            "900°"
+          ],
+          "answer": "540°"
+        },
+        {
+          "id": 14,
+          "question": "Simplify: √48",
+          "options": [
+            "4√3",
+            "6√2",
+            "3√16",
+            "2√12"
+          ],
+          "answer": "4√3"
+        },
+        {
+          "id": 15,
+          "question": "A car travels 180 km in 3 hours. What is its average speed?",
+          "options": [
+            "50 km/h",
+            "60 km/h",
+            "70 km/h",
+            "80 km/h"
+          ],
+          "answer": "60 km/h"
+        },
+        {
+          "id": 16,
+          "question": "What is the probability of getting a head when flipping a fair coin?",
+          "options": [
+            "1/4",
+            "1/3",
+            "1/2",
+            "2/3"
+          ],
+          "answer": "1/2"
+        },
+        {
+          "id": 17,
+          "question": "Convert 2.5 hours to minutes:",
+          "options": [
+            "120 minutes",
+            "130 minutes",
+            "140 minutes",
+            "150 minutes"
+          ],
+          "answer": "150 minutes"
+        },
+        {
+          "id": 18,
+          "question": "What is the y-intercept of the line y = 3x - 4?",
+          "options": [
+            "-4",
+            "-3",
+            "3",
+            "4"
+          ],
+          "answer": "-4"
+        },
+        {
+          "id": 19,
+          "question": "Find the area of a triangle with base 10 cm and height 6 cm:",
+          "options": [
+            "16 cm²",
+            "30 cm²",
+            "60 cm²",
+            "120 cm²"
+          ],
+          "answer": "30 cm²"
+        },
+        {
+          "id": 20,
+          "question": "What is 2⁴ × 2³?",
+          "options": [
+            "2⁷",
+            "2¹²",
+            "4⁷",
+            "4¹²"
+          ],
+          "answer": "2⁷"
+        }
+      ]
+    },
+    "Science": {
+      "questions": [
+        {
+          "id": 1,
+          "question": "What is the basic unit of heredity?",
+          "options": [
+            "Cell",
+            "Chromosome",
+            "Gene",
+            "DNA"
+          ],
+          "answer": "Gene"
+        },
+        {
+          "id": 2,
+          "question": "Which Philippine volcano is known as the 'perfect cone'?",
+          "options": [
+            "Mount Pinatubo",
+            "Mayon Volcano",
+            "Taal Volcano",
+            "Mount Apo"
+          ],
+          "answer": "Mayon Volcano"
+        },
+        {
+          "id": 3,
+          "question": "What type of plate boundary is found in the Philippine Trench?",
+          "options": [
+            "Divergent",
+            "Convergent",
+            "Transform",
+            "Hotspot"
+          ],
+          "answer": "Convergent"
+        },
+        {
+          "id": 4,
+          "question": "Which gas makes up approximately 78% of Earth's atmosphere?",
+          "options": [
+            "Oxygen",
+            "Carbon dioxide",
+            "Nitrogen",
+            "Argon"
+          ],
+          "answer": "Nitrogen"
+        },
+        {
+          "id": 5,
+          "question": "What is the chemical formula for glucose?",
+          "options": [
+            "C₆H₁₂O₆",
+            "CO₂",
+            "H₂SO₄",
+            "NaCl"
+          ],
+          "answer": "C₆H₁₂O₆"
+        },
+        {
+          "id": 6,
+          "question": "Which organ system is responsible for transporting nutrients and oxygen throughout the body?",
+          "options": [
+            "Respiratory system",
+            "Digestive system",
+            "Circulatory system",
+            "Nervous system"
+          ],
+          "answer": "Circulatory system"
+        },
+        {
+          "id": 7,
+          "question": "What is the pH value of pure water at 25°C?",
+          "options": [
+            "0",
+            "7",
+            "10",
+            "14"
+          ],
+          "answer": "7"
+        },
+        {
+          "id": 8,
+          "question": "Which part of the cell controls its activities?",
+          "options": [
+            "Cell membrane",
+            "Cytoplasm",
+            "Nucleus",
+            "Mitochondria"
+          ],
+          "answer": "Nucleus"
+        },
+        {
+          "id": 9,
+          "question": "What type of energy transformation occurs in photosynthesis?",
+          "options": [
+            "Light energy to chemical energy",
+            "Chemical energy to light energy",
+            "Heat energy to light energy",
+            "Mechanical energy to chemical energy"
+          ],
+          "answer": "Light energy to chemical energy"
+        },
+        {
+          "id": 10,
+          "question": "Which element has the chemical symbol 'Fe'?",
+          "options": [
+            "Fluorine",
+            "Iron",
+            "Lead",
+            "Gold"
+          ],
+          "answer": "Iron"
+        },
+        {
+          "id": 11,
+          "question": "What is the speed of light in a vacuum?",
+          "options": [
+            "3.0 × 10⁶ m/s",
+            "3.0 × 10⁷ m/s",
+            "3.0 × 10⁸ m/s",
+            "3.0 × 10⁹ m/s"
+          ],
+          "answer": "3.0 × 10⁸ m/s"
+        },
+        {
+          "id": 12,
+          "question": "Which type of reproduction involves only one parent?",
+          "options": [
+            "Sexual reproduction",
+            "Asexual reproduction",
+            "Binary fission",
+            "Fertilization"
+          ],
+          "answer": "Asexual reproduction"
+        },
+        {
+          "id": 13,
+          "question": "What causes the monsoon rains in the Philippines?",
+          "options": [
+            "Volcanic activity",
+            "Seasonal wind patterns",
+            "Ocean currents",
+            "Solar flares"
+          ],
+          "answer": "Seasonal wind patterns"
+        },
+        {
+          "id": 14,
+          "question": "Which organelle is known as the 'powerhouse of the cell'?",
+          "options": [
+            "Nucleus",
+            "Ribosome",
+            "Mitochondria",
+            "Golgi apparatus"
+          ],
+          "answer": "Mitochondria"
+        },
+        {
+          "id": 15,
+          "question": "What is the atomic number of carbon?",
+          "options": [
+            "4",
+            "6",
+            "8",
+            "12"
+          ],
+          "answer": "6"
+        },
+        {
+          "id": 16,
+          "question": "Which layer of the Earth is liquid?",
+          "options": [
+            "Crust",
+            "Mantle",
+            "Outer core",
+            "Inner core"
+          ],
+          "answer": "Outer core"
+        },
+        {
+          "id": 17,
+          "question": "What is the main cause of coral bleaching?",
+          "options": [
+            "Ocean pollution",
+            "Overfishing",
+            "Rising sea temperatures",
+            "Coastal development"
+          ],
+          "answer": "Rising sea temperatures"
+        },
+        {
+          "id": 18,
+          "question": "Which force keeps planets in orbit around the Sun?",
+          "options": [
+            "Magnetic force",
+            "Gravitational force",
+            "Electric force",
+            "Nuclear force"
+          ],
+          "answer": "Gravitational force"
+        },
+        {
+          "id": 19,
+          "question": "What is the most abundant metal in the Earth's crust?",
+          "options": [
+            "Iron",
+            "Copper",
+            "Aluminum",
+            "Gold"
+          ],
+          "answer": "Aluminum"
+        },
+        {
+          "id": 20,
+          "question": "Which process describes the movement of water from plants to the atmosphere?",
+          "options": [
+            "Evaporation",
+            "Condensation",
+            "Transpiration",
+            "Precipitation"
+          ],
+          "answer": "Transpiration"
+        }
+      ]
+    }
+  }
+}
