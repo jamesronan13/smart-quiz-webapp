@@ -70,6 +70,10 @@ export default function Login() {
     navigate("/register");
   };
 
+  const goToForgotPassword = () => {
+    navigate("/forgot-password");
+  };
+
   return (
     <div className="h-screen w-screen bg-one flex flex-col justify-center items-center">
       <div className="bg-three md:p-20 p-8 rounded-3xl shadow-xl flex flex-col justify-center items-center">
@@ -148,7 +152,12 @@ export default function Login() {
               Sign Up
             </button>
 
-            <p className="font-poppins text-nine text-sm hover:underline cursor-pointer">Forgot Password?</p>
+            <p 
+              onClick={goToForgotPassword}
+              className="font-poppins text-nine text-sm hover:underline cursor-pointer"
+            >
+              Forgot Password?
+            </p>
           </div>
         </form>
       </div>
