@@ -20,6 +20,14 @@ module.exports = {
         white: "#FFFFF0",
         black: "#1C1C1C",
       },
+      keyframes: {
+        shimmer: {
+          "100%": { transform: "translateX(100%)" },
+        },
+      },
+      animation: {
+        shimmer: "shimmer 1.5s infinite",
+      },
     },
   },
   plugins: [],
