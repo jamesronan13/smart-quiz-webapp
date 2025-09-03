@@ -97,14 +97,14 @@ export default function Category() {
 
     const getCategoryStyle = (category, isComingSoon = false) => {
         if (isComingSoon && !availableCategories[category]) {
-            return "bg-gray-400 rounded-3xl text-one font-poppins font-bold text-xl px-6 py-8 cursor-not-allowed opacity-50";
+            return "bg-ten rounded-3xl text-one font-poppins font-bold text-xl px-6 py-8 cursor-not-allowed opacity-50";
         }
         
         if (!availableCategories[category]) {
-            return "bg-gray-400 rounded-3xl text-one font-poppins font-bold text-xl px-6 py-8 cursor-not-allowed opacity-50";
+            return "bg-ten rounded-3xl text-one font-poppins font-bold text-xl px-6 py-8 cursor-not-allowed opacity-50";
         }
         
-        return "bg-nine rounded-3xl text-one font-poppins font-bold text-xl px-6 py-8 cursor-pointer hover:bg-gray-700 transition-colors transform hover:scale-105 duration-200";
+        return "bg-nine rounded-3xl text-one font-poppins font-bold text-xl px-6 py-8 cursor-pointer hover:bg-ten transition-colors transform hover:scale-105 duration-200";
     };
 
     const getCategoryTooltip = (category) => {
@@ -125,7 +125,7 @@ export default function Category() {
 
     if (loading) {
         return (
-            <div className="h-screen w-screen bg-one flex justify-center items-center">
+            <div className="h-screen w-screen bg-white flex justify-center items-center">
                 <div className="text-center">
                     <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-primary mb-4 mx-auto"></div>
                     <p className="font-poppins text-primary text-xl">Loading categories...</p>
@@ -135,7 +135,7 @@ export default function Category() {
     }
 
     return (
-        <div className="h-screen w-screen bg-one flex flex-col justify-center items-center">
+        <div className="h-screen w-screen bg-white flex flex-col justify-center items-center">
             <h1 className="font-poppins font-bold text-nine text-3xl text-primary mb-10">Choose a Category</h1>
 
             <div className="grid grid-cols-2 gap-6 mt-4 text-center max-w-md w-full px-4">
@@ -184,7 +184,6 @@ export default function Category() {
                 </div> 
             </div> 
 
-            {/* Status message */}
             <div className="mt-6 text-center max-w-md px-4">
                 <p className="font-poppins text-sm text-gray-600">
                     {Object.values(availableCategories).filter(Boolean).length === 0 
@@ -194,10 +193,9 @@ export default function Category() {
                 </p>
             </div>
 
-            {/* Back button */} 
             <button  
                 onClick={() => navigate("/home")} 
-                className="mt-8 bg-gray-500 hover:bg-gray-600 text-white font-poppins font-medium px-6 py-2 rounded-lg transition-colors" 
+                className="mt-8 bg-seven hover:bg-ten text-white font-poppins font-medium px-6 py-2 rounded-lg transition-colors" 
             > 
                 Back to Home 
             </button> 

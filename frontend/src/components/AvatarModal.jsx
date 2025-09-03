@@ -17,7 +17,7 @@ export default function AvatarModal({ currentImg, onClose, onSave }) {
 
   return (
     <div className="fixed inset-0 bg-black/50 flex justify-center items-center z-50">
-      <div className="bg-white p-6 rounded-lg shadow-lg w-96 relative">
+      <div className="bg-white p-6 rounded-2xl shadow-lg w-96 relative">
 
         <button
           onClick={onClose}

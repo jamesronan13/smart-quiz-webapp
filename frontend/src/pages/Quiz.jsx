@@ -286,11 +286,11 @@ export default function Quiz() {
         return (
             <div className="h-screen w-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex justify-center items-center">
                 <div className="text-center bg-white rounded-2xl p-8 shadow-xl">
-                    <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-indigo-600 mb-4 mx-auto"></div>
+                    <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-six mb-4 mx-auto"></div>
                     <p className="font-poppins text-gray-700 text-xl font-medium">
                         Loading {category === "randomized" ? "randomized" : category} quiz...
                     </p>
-                    <p className="font-poppins text-gray-500 text-sm mt-2">This may take a moment...</p>
+                    <p className="font-poppins text-six text-sm mt-2">This may take a moment...</p>
                 </div>
             </div>
         );
@@ -329,7 +329,7 @@ export default function Quiz() {
             <div className="h-screen w-screen bg-gradient-to-br from-gray-50 to-gray-100 flex justify-center items-center">
                 <div className="text-center bg-white rounded-2xl p-8 shadow-xl">
                     <div className="text-6xl mb-4">📚</div>
-                    <p className="font-poppins text-gray-600 text-xl mb-4 font-medium">
+                    <p className="font-poppins text-six text-xl mb-4 font-medium">
                         No questions available for {getDisplayCategory()}
                     </p>
                     <button 

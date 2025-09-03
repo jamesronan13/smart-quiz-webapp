@@ -18,7 +18,7 @@ export default function Profile() {
     const [loadingName, setLoadingName] = useState(true);
     const [showAvatarModal, setShowAvatarModal] = useState(false);
     const [showPasswordModal, setShowPasswordModal] = useState(false);
-    const [profileImg, setProfileImg] = useState("https://media.sproutsocial.com/uploads/2022/06/profile-picture.jpeg"); //Placeholder
+    const [profileImg, setProfileImg] = useState("https://media.sproutsocial.com/uploads/2022/06/profile-picture.jpeg"); 
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
 
@@ -31,7 +31,6 @@ export default function Profile() {
         }
     };
 
-    // Fetching
     useEffect(() => {
         const fetchUserData = async () => {
             if (user) {
@@ -66,61 +65,83 @@ export default function Profile() {
     }
 
     return (
-        <div className="h-screen w-screen bg-one flex flex-col justify-center items-center">
-
-            <div className="w-80 md:w-[500px] bg-white rounded-lg shadow-lg p-10 flex flex-col justify-center items-center mb-6">
+        <div className="min-h-screen w-full bg-white flex flex-col items-center px-4 md:px-8 py-6">
+            
+            <div className="w-full max-w-md md:max-w-2xl bg-two rounded-2xl shadow-lg p-6 md:p-10 flex flex-col md:flex-row items-center md:items-start mb-6">
                 <img
                     src={profileImg}
                     alt="Profile"
                     className="w-24 h-24 rounded-full object-cover border-4 border-six shadow-md hover:scale-105 transition-transform duration-300"
                 />
+                <div className="flex flex-col mt-4 md:mt-0 md:ml-6 text-center md:text-left">
+                    {loadingName ? (
+                        <div className="relative h-4 w-44 mt-2 rounded-lg bg-two overflow-hidden">
+                            <div className="absolute inset-0 -translate-x-full animate-[shimmer_1.5s_infinite] 
+                            bg-gradient-to-r from-transparent via-white/60 to-transparent"></div>
+                        </div>
+                        ) : (
+                            <h1 className="font-poppins text-black text-2xl font-bold mt-2">
+                                {firstName ? firstName : "User"}
+                            </h1>
+                        )}
 
-                {loadingName ? (
-                    <div className="relative h-4 w-44 mt-4 rounded-lg bg-two overflow-hidden">
-                        <div className="absolute inset-0 -translate-x-full animate-[shimmer_1.5s_infinite] 
-                        bg-gradient-to-r from-transparent via-white/60 to-transparent"></div>
-                    </div>
-                ) : (
-                    <h1 className="font-poppins text-black text-2xl font-bold mt-4">
-                        {firstName ? firstName : "User"}
-                    </h1>
-                )}
+                        {loadingName ? (
+                            <div className="relative h-4 w-44 mt-2 rounded-lg bg-two overflow-hidden">
+                                <div className="absolute inset-0 -translate-x-full animate-[shimmer_1.5s_infinite] 
+                                bg-gradient-to-r from-transparent via-white/60 to-transparent"></div>
+                            </div>
+                        ) : (
+                            <p className="font-poppins text-gray-600">
+                                {email ? email : "Email"}
+                            </p>
+                        )}
+                        
+                        {loadingName ? (
+                            <div className="relative h-4 w-44 mt-2 rounded-lg bg-two overflow-hidden">
+                                <div className="absolute inset-0 -translate-x-full animate-[shimmer_1.5s_infinite] 
+                                bg-gradient-to-r from-transparent via-white/60 to-transparent"></div>
+                            </div>
+                        ) : (
+                        <div className="border-2 border-four rounded-full h-max w-max px-2 py-1 mt-2">
+                            <p className="text-black font-poppins text-sm text-center">Math Wizard 🪄</p>
+                        </div>
+                        )}
 
-                {loadingName ? (
-                    <div className="relative h-4 w-44 mt-4 rounded-lg bg-two overflow-hidden">
-                        <div className="absolute inset-0 -translate-x-full animate-[shimmer_1.5s_infinite] 
-                        bg-gradient-to-r from-transparent via-white/60 to-transparent"></div>
-                    </div>
-                ) : (
-                    <p className="font-poppins text-gray-600">
-                        {email ? email : "Email"}
-                    </p>
-                )}
+                </div>
             </div>
 
-            <div className="w-80 md:w-[500px] bg-white rounded-lg shadow-lg p-8 gap-2 flex flex-col justify-center items-center">
+            <div className="w-full max-w-md md:max-w-2xl bg-two rounded-2xl shadow-lg p-6 flex flex-col gap-4">
                 <div 
                     onClick={() => setShowAvatarModal(true)} 
-                    className="w-full flex flex-row justify-center items-center space-x-4 cursor-pointer rounded-lg border-2 border-six p-4"
+                    className="w-full flex flex-row items-center space-x-4 cursor-pointer rounded-full border-4 border-four p-4 hover:bg-four transition"
                 >
-                    <img src={EditAvatar} alt="Edit Avatar" className="w-5 h-5 object-cover hover:scale-105 transition-transform duration-300" />
+                    <img src={EditAvatar} alt="Edit Avatar" className="w-5 h-5 object-cover" />
                     <h1 className="text-black font-poppins text-lg font-semibold">Edit Avatar</h1>
                 </div>
 
                 <div 
                     onClick={() => setShowPasswordModal(true)}
-                    className="w-full flex flex-row justify-center items-center space-x-4 cursor-pointer rounded-lg border-2 border-six p-4">
-                    <img src={EditPassword} alt="Change Password" className="w-5 h-5 object-cover hover:scale-105 transition-transform duration-300" />
+                    className="w-full flex flex-row items-center space-x-4 cursor-pointer rounded-full border-4 border-four p-4 hover:bg-four transition"
+                >
+                    <img src={EditPassword} alt="Change Password" className="w-5 h-5 object-cover" />
                     <h1 className="text-black font-poppins text-lg font-semibold">Change Password</h1>
                 </div>
 
-                <div onClick={handleLogout} className="w-full flex flex-row justify-center items-center space-x-4 cursor-pointer rounded-lg border-2 border-six p-4">
-                    <img src={LogoutIcon} alt="Log Out" className="w-5 h-5 object-cover hover:scale-105 transition-transform duration-300" />
+                <div 
+                    onClick={handleLogout} 
+                    className="w-full flex flex-row items-center space-x-4 cursor-pointer rounded-full border-4 border-four p-4 hover:bg-four transition"
+                >
+                    <img src={LogoutIcon} alt="Log Out" className="w-5 h-5 object-cover" />
                     <h1 className="text-black font-poppins text-lg font-semibold">Log Out</h1>
                 </div>
             </div>
 
-            <div className="fixed bottom-0 left-0 w-full bg-white shadow-lg">
+            <div className="md:hidden fixed bottom-0 left-0 w-full bg-white shadow-lg">
+                <TabBar />
+            </div>
+
+
+            <div className="hidden md:block w-full max-w-2xl mt-8">
                 <TabBar />
             </div>
 
