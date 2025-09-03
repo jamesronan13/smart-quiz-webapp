@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { signOut } from "firebase/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "../firebase/firebaseConfig";
-import { doc, getDoc } from "firebase/firestore"; 
+import { doc, getDoc, updateDoc } from "firebase/firestore"; 
 import EditAvatarModal from "../components/AvatarModal";
 import EditPasswordModal from "../components/PasswordModal";
 import TabBar from "../components/TabBar";
@@ -18,8 +18,9 @@ export default function Profile() {
     const [loadingName, setLoadingName] = useState(true);
     const [showAvatarModal, setShowAvatarModal] = useState(false);
     const [showPasswordModal, setShowPasswordModal] = useState(false);
+    const [showLogoutDialog, setShowLogoutDialog] = useState(false);
     const [profileImg, setProfileImg] = useState("https://media.sproutsocial.com/uploads/2022/06/profile-picture.jpeg"); 
-    const [password, setPassword] = useState("");
+
     const navigate = useNavigate();
 
     const handleLogout = async () => {
@@ -28,6 +29,20 @@ export default function Profile() {
             navigate("/");
         } catch (error) {
             console.error("Logout error:", error);
+        }
+    };
+
+    const saveProfileImageToDatabase = async (newImageUrl) => {
+        if (user) {
+            try {
+                const userRef = doc(db, "users", user.uid);
+                await updateDoc(userRef, {
+                    profileImg: newImageUrl
+                });
+                console.log("Profile image updated successfully");
+            } catch (error) {
+                console.error("Error updating profile image:", error);
+            }
         }
     };
 
@@ -40,8 +55,11 @@ export default function Profile() {
                     const userSnap = await getDoc(userRef);
 
                     if (userSnap.exists()) {
-                        setFirstName(userSnap.data().firstName || "");
-                        setEmail(userSnap.data().email || user.email || "");
+                        const userData = userSnap.data();
+                        setFirstName(userData.firstName || "");
+                        setEmail(userData.email || user.email || "");
+                        // Load profile image from database, fallback to default if not found
+                        setProfileImg(userData.profileImg || "https://media.sproutsocial.com/uploads/2022/06/profile-picture.jpeg");
                     } else {
                         console.log("No such document!");
                     }
@@ -128,7 +146,7 @@ export default function Profile() {
                 </div>
 
                 <div 
-                    onClick={handleLogout} 
+                    onClick={() => setShowLogoutDialog(true)} 
                     className="w-full flex flex-row items-center space-x-4 cursor-pointer rounded-full border-4 border-four p-4 hover:bg-four transition"
                 >
                     <img src={LogoutIcon} alt="Log Out" className="w-5 h-5 object-cover" />
@@ -140,32 +158,59 @@ export default function Profile() {
                 <TabBar />
             </div>
 
-
             <div className="hidden md:block w-full max-w-2xl mt-8">
                 <TabBar />
             </div>
+
+            {/* Logout Confirmation Dialog */}
+            {showLogoutDialog && (
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+                    <div className="bg-white rounded-2xl shadow-lg p-6 w-11/12 max-w-sm">
+                        <h2 className="text-xl font-bold text-center mb-4 font-poppins">Confirm Logout</h2>
+                        <p className="text-gray-600 text-center mb-6 font-poppins">
+                            Are you sure you want to logout?
+                        </p>
+                        <div className="flex gap-4 justify-center">
+                            <button
+                                onClick={() => setShowLogoutDialog(false)}
+                                className="px-6 py-2 bg-gray-200 text-black rounded-full font-poppins font-semibold hover:bg-gray-300 transition"
+                            >
+                                No
+                            </button>
+                            <button
+                                onClick={() => {
+                                    setShowLogoutDialog(false);
+                                    handleLogout();
+                                }}
+                                className="px-6 py-2 bg-red-500 text-white rounded-full font-poppins font-semibold hover:bg-red-600 transition"
+                            >
+                                Yes
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
 
             {showAvatarModal && (
                 <EditAvatarModal
                     currentImg={profileImg}
                     onClose={() => setShowAvatarModal(false)}
-                    onSave={(newImg) => {
+                    onSave={async (newImg) => {
                         setProfileImg(newImg);
+                        await saveProfileImageToDatabase(newImg);
                         setShowAvatarModal(false);
                     }}
                 />
             )}
 
-            {showPasswordModal && (
-                <EditPasswordModal
-                    currentPassword={password}
-                    onClose={() => setShowPasswordModal(false)}
-                    onSave={(newPassword) => {
-                        setPassword(newPassword);
-                        setShowPasswordModal(false);
-                    }}
-                />
-            )}
+           {showPasswordModal && (
+    <EditPasswordModal
+        onClose={() => setShowPasswordModal(false)}
+        onSave={(newPassword) => {
+            setShowPasswordModal(false);
+        }}
+    />
+)}
         </div>
     );
 }

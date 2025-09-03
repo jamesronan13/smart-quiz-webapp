@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { db } from "../firebase/firebaseConfig";
-import { collection, getDocs, doc, getDoc, query, where } from "firebase/firestore";
+import { collection, getDocs, doc, getDoc, query, where, addDoc, serverTimestamp } from "firebase/firestore";
 
 export default function Quiz() {
     const { category } = useParams();
@@ -16,10 +16,75 @@ export default function Quiz() {
     const [score, setScore] = useState(0);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [isSaving, setIsSaving] = useState(false);
+    const [quizStartTime, setQuizStartTime] = useState(null);
+    
+    // Timer states
+    const [timeLeft, setTimeLeft] = useState(15);
+    const [isTimerActive, setIsTimerActive] = useState(false);
+    const timerRef = useRef(null);
+    const questionStartTime = useRef(null);
 
     useEffect(() => {
         fetchQuestions();
+        setQuizStartTime(new Date());
     }, [category]);
+
+    // Timer effect
+    useEffect(() => {
+        if (isTimerActive && timeLeft > 0) {
+            timerRef.current = setTimeout(() => {
+                setTimeLeft(timeLeft - 1);
+            }, 1000);
+        } else if (isTimerActive && timeLeft === 0) {
+            // Time's up - auto advance with no answer (counted as wrong)
+            handleTimeUp();
+        }
+
+        return () => {
+            if (timerRef.current) {
+                clearTimeout(timerRef.current);
+            }
+        };
+    }, [timeLeft, isTimerActive]);
+
+    // Start timer when question changes
+    useEffect(() => {
+        if (questions.length > 0 && !showResult && !loading) {
+            startTimer();
+        }
+    }, [currentQuestion, questions.length, showResult, loading]);
+
+    const startTimer = () => {
+        setTimeLeft(15);
+        setIsTimerActive(true);
+        questionStartTime.current = new Date();
+    };
+
+    const stopTimer = () => {
+        setIsTimerActive(false);
+        if (timerRef.current) {
+            clearTimeout(timerRef.current);
+        }
+    };
+
+    const handleTimeUp = () => {
+        stopTimer();
+        
+        // Save empty answer (will be counted as wrong)
+        const newAnswers = [...userAnswers];
+        newAnswers[currentQuestion] = ""; // No answer selected
+        setUserAnswers(newAnswers);
+
+        // Move to next question or finish quiz
+        if (currentQuestion < questions.length - 1) {
+            setCurrentQuestion(currentQuestion + 1);
+            setSelectedAnswer("");
+        } else {
+            // Quiz finished, calculate score
+            calculateScore(newAnswers);
+        }
+    };
 
     const shuffleArray = (array) => {
         const shuffled = [...array];
@@ -216,6 +281,8 @@ export default function Quiz() {
     };
 
     const handleNext = () => {
+        stopTimer();
+        
         // Save the current answer
         const newAnswers = [...userAnswers];
         newAnswers[currentQuestion] = selectedAnswer;
@@ -223,8 +290,8 @@ export default function Quiz() {
 
         if (currentQuestion < questions.length - 1) {
             setCurrentQuestion(currentQuestion + 1);
-            // Load the next question's previously selected answer if any
-            setSelectedAnswer(newAnswers[currentQuestion + 1] || "");
+            // Reset selected answer for next question
+            setSelectedAnswer("");
         } else {
             // Quiz finished, calculate score
             calculateScore(newAnswers);
@@ -233,6 +300,8 @@ export default function Quiz() {
 
     const handlePrevious = () => {
         if (currentQuestion > 0) {
+            stopTimer();
+            
             // Save current answer before going back
             const newAnswers = [...userAnswers];
             newAnswers[currentQuestion] = selectedAnswer;
@@ -244,35 +313,113 @@ export default function Quiz() {
         }
     };
 
-    const calculateScore = (answers) => {
+    const saveQuizResult = async (finalScore, finalAnswers) => {
+        try {
+            setIsSaving(true);
+            
+            const quizEndTime = new Date();
+            const timeTaken = Math.round((quizEndTime - quizStartTime) / 1000); // in seconds
+
+            // Calculate detailed results
+            const detailedResults = questions.map((question, index) => ({
+                question: question.question,
+                category: question.category || category,
+                userAnswer: finalAnswers[index] || null,
+                correctAnswer: question.answer,
+                isCorrect: finalAnswers[index] === question.answer,
+                options: question.options,
+                answeredInTime: finalAnswers[index] !== null && finalAnswers[index] !== ""
+            }));
+
+            // Calculate category breakdown for randomized quiz
+            const categoryStats = {};
+            if (category === "randomized") {
+                detailedResults.forEach(result => {
+                    const cat = result.category || "Unknown";
+                    if (!categoryStats[cat]) {
+                        categoryStats[cat] = { total: 0, correct: 0 };
+                    }
+                    categoryStats[cat].total++;
+                    if (result.isCorrect) {
+                        categoryStats[cat].correct++;
+                    }
+                });
+            }
+
+            const quizResult = {
+                category: category,
+                displayCategory: getDisplayCategory(),
+                score: finalScore,
+                totalQuestions: questions.length,
+                percentage: Math.round((finalScore / questions.length) * 100),
+                timeTaken: timeTaken, // in seconds
+                completedAt: serverTimestamp(),
+                startedAt: quizStartTime,
+                detailedResults: detailedResults,
+                categoryStats: category === "randomized" ? categoryStats : null,
+                userAgent: navigator.userAgent, // Optional: to track device/browser
+                quizType: category === "randomized" ? "mixed" : "category-specific",
+                timedQuiz: true, // Indicate this was a timed quiz
+                timePerQuestion: 15 // seconds
+            };
+
+            // Save to Firestore
+            const docRef = await addDoc(collection(db, "quizResults"), quizResult);
+            console.log("Quiz result saved with ID: ", docRef.id);
+        } catch (error) {
+            console.error("Error saving quiz result:", error);
+            // Don't show error to user, just log it - the quiz completion should still work
+        } finally {
+            setIsSaving(false);
+        }
+    };
+
+    const calculateScore = async (answers) => {
+        stopTimer();
+        
         let correctCount = 0;
         questions.forEach((question, index) => {
             if (answers[index] === question.answer) {
                 correctCount++;
             }
         });
+        
         setScore(correctCount);
         setShowResult(true);
+
+        // Save the result to Firebase
+        await saveQuizResult(correctCount, answers);
     };
 
     const restartQuiz = () => {
+        stopTimer();
         setCurrentQuestion(0);
         setSelectedAnswer("");
         setUserAnswers([]);
         setShowResult(false);
         setScore(0);
+        setQuizStartTime(new Date()); // Reset start time
+        setTimeLeft(15);
+        setIsTimerActive(false);
         
-        // For randomized quizzes, fetch new questions
+     
         if (category === "randomized") {
             fetchQuestions();
         } else {
-            // For category-specific quizzes, shuffle the existing questions
+            
             setQuestions(shuffleArray(originalQuestions));
         }
     };
 
     const goToCategories = () => {
+        stopTimer();
         navigate("/category");
+    };
+
+
+    const goToHome = () => {
+        stopTimer();
+        navigate("/home");
     };
 
     const getDisplayCategory = () => {
@@ -280,6 +427,35 @@ export default function Quiz() {
             return "Mixed Categories";
         }
         return category;
+    };
+
+    // Timer display component
+    const TimerDisplay = () => {
+        const getTimerColor = () => {
+            if (timeLeft <= 3) return "text-red-600 bg-red-100 border-red-300";
+            if (timeLeft <= 7) return "text-yellow-600 bg-yellow-100 border-yellow-300";
+            return "text-green-600 bg-green-100 border-green-300";
+        };
+
+        const getProgressColor = () => {
+            if (timeLeft <= 3) return "bg-red-500";
+            if (timeLeft <= 7) return "bg-yellow-500";
+            return "bg-green-500";
+        };
+
+        return (
+            <div className="flex items-center space-x-3">
+                <div className={`px-4 py-2 rounded-full border-2 font-bold ${getTimerColor()}`}>
+                    <span className="text-lg">{timeLeft}s</span>
+                </div>
+                <div className="flex-1 bg-gray-200 rounded-full h-2 overflow-hidden">
+                    <div 
+                        className={`h-full transition-all duration-1000 ease-linear ${getProgressColor()}`}
+                        style={{ width: `${(timeLeft / 15) * 100}%` }}
+                    />
+                </div>
+            </div>
+        );
     };
 
     if (loading) {
@@ -345,6 +521,7 @@ export default function Quiz() {
 
     if (showResult) {
         const percentage = Math.round((score / questions.length) * 100);
+
         const getEmoji = () => {
             if (percentage >= 90) return "🏆";
             if (percentage >= 80) return "🎉";
@@ -395,6 +572,16 @@ export default function Quiz() {
                 <div className="bg-white rounded-3xl p-8 max-w-md w-full text-center shadow-2xl">
                     <h2 className="font-poppins font-bold text-2xl text-gray-800 mb-6">Quiz Complete!</h2>
                     
+                    {/* Show saving indicator */}
+                    {isSaving && (
+                        <div className="mb-4 p-3 bg-blue-50 rounded-lg border border-blue-200">
+                            <div className="flex items-center justify-center">
+                                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-500 mr-2"></div>
+                                <span className="font-poppins text-sm text-blue-700">Saving results...</span>
+                            </div>
+                        </div>
+                    )}
+                    
                     <div className="mb-6">
                         <div className="text-6xl mb-4">{getEmoji()}</div>
                         <div className={`bg-gradient-to-r ${getGradientColor()} text-white rounded-2xl p-4 mb-4`}>
@@ -407,6 +594,9 @@ export default function Quiz() {
                         </div>
                         <p className="font-poppins text-lg font-medium text-gray-700">
                             {getMessage()}
+                        </p>
+                        <p className="font-poppins text-sm text-gray-500 mt-2">
+                            ⏱️ Timed Quiz (15s per question)
                         </p>
                     </div>
 
@@ -430,15 +620,37 @@ export default function Quiz() {
                     <div className="space-y-3">
                         <button 
                             onClick={restartQuiz}
-                            className="w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-poppins font-medium py-3 rounded-xl transition-all duration-200 transform hover:scale-105"
+                            disabled={isSaving}
+                            className={`w-full font-poppins font-medium py-3 rounded-xl transition-all duration-200 transform ${
+                                isSaving 
+                                    ? "bg-gray-300 text-gray-500 cursor-not-allowed" 
+                                    : "bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white hover:scale-105"
+                            }`}
                         >
                             {category === "randomized" ? "Take New Random Quiz" : "Take Quiz Again"}
                         </button>
                         <button 
                             onClick={goToCategories}
-                            className="w-full bg-gray-500 hover:bg-gray-600 text-white font-poppins font-medium py-3 rounded-xl transition-all duration-200"
+                            disabled={isSaving}
+                            className={`w-full font-poppins font-medium py-3 rounded-xl transition-all duration-200 ${
+                                isSaving 
+                                    ? "bg-gray-300 text-gray-500 cursor-not-allowed" 
+                                    : "bg-gray-500 hover:bg-gray-600 text-white"
+                            }`}
                         >
                             Choose Another Category
+                        </button>
+                        {/* NEW: Back to Home button */}
+                        <button 
+                            onClick={goToHome}
+                            disabled={isSaving}
+                            className={`w-full font-poppins font-medium py-3 rounded-xl transition-all duration-200 transform ${
+                                isSaving 
+                                    ? "bg-gray-300 text-gray-500 cursor-not-allowed" 
+                                    : "bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white hover:scale-105"
+                            }`}
+                        >
+                            🏠 Back to Home
                         </button>
                     </div>
                 </div>
@@ -460,6 +672,11 @@ export default function Quiz() {
                     <span className="font-poppins text-sm text-gray-600 bg-gray-100 px-3 py-1 rounded-full">
                         {currentQuestion + 1} of {questions.length}
                     </span>
+                </div>
+                
+                {/* Timer Display */}
+                <div className="mb-3">
+                    <TimerDisplay />
                 </div>
                 
                 {/* Progress Bar */}
@@ -534,6 +751,7 @@ export default function Quiz() {
                     </div>
                 </div>
             </div>
+
 
             {/* Footer */}
             <div className="bg-white px-6 py-4 border-t border-gray-200 shadow-lg">
