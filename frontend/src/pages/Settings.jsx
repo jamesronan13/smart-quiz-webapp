@@ -7,10 +7,10 @@ export default function Settings() {
     const [showContactModal, setShowContactModal] = useState(false);
 
     return (
-        <div className="h-screen w-screen bg-one flex flex-col justify-center items-center">
+        <div className="h-screen w-screen bg-white flex flex-col justify-center items-center">
             
             {/* Header */}
-            <div className="w-80 md:w-[500px] bg-white rounded-lg shadow-lg p-8 flex flex-col justify-center items-center mb-6">
+            <div className="w-80 md:w-[500px] bg-two rounded-2xl shadow-lg p-8 flex flex-col justify-center items-center mb-6">
                 <h1 className="font-poppins text-black text-3xl font-bold">Settings</h1>
                 <p className="font-poppins text-gray-600 text-center mt-2">
                     Manage your app preferences and information
@@ -18,12 +18,12 @@ export default function Settings() {
             </div>
 
             {/* Settings Options */}
-            <div className="w-80 md:w-[500px] bg-white rounded-lg shadow-lg p-8 gap-2 flex flex-col justify-center items-center">
+            <div className="w-80 md:w-[500px] bg-two rounded-2xl shadow-lg p-8 gap-2 flex flex-col justify-center items-center">
                 
                 {/* About the App */}
                 <div 
                     onClick={() => setShowAboutModal(true)} 
-                    className="w-full flex flex-row justify-center items-center space-x-4 cursor-pointer rounded-lg border-2 border-six p-4 hover:bg-gray-50 transition-colors duration-200"
+                    className="w-full flex flex-row justify-center items-center space-x-4 cursor-pointer rounded-full border-4 border-six p-4 hover:bg-gray-50 transition-colors duration-200"
                 >
                     <span className="text-2xl">📖</span>
                     <h1 className="text-black font-poppins text-lg font-semibold">About the App</h1>
@@ -32,7 +32,7 @@ export default function Settings() {
                 {/* Terms & Conditions */}
                 <div 
                     onClick={() => setShowTermsModal(true)}
-                    className="w-full flex flex-row justify-center items-center space-x-4 cursor-pointer rounded-lg border-2 border-six p-4 hover:bg-gray-50 transition-colors duration-200"
+                    className="w-full flex flex-row justify-center items-center space-x-4 cursor-pointer rounded-full border-4 border-six p-4 hover:bg-gray-50 transition-colors duration-200"
                 >
                     <span className="text-2xl">📜</span>
                     <h1 className="text-black font-poppins text-lg font-semibold">Terms & Conditions</h1>
@@ -41,7 +41,7 @@ export default function Settings() {
                 {/* Contact Support */}
                 <div 
                     onClick={() => setShowContactModal(true)}
-                    className="w-full flex flex-row justify-center items-center space-x-4 cursor-pointer rounded-lg border-2 border-six p-4 hover:bg-gray-50 transition-colors duration-200"
+                    className="w-full flex flex-row justify-center items-center space-x-4 cursor-pointer rounded-full border-4 border-six p-4 hover:bg-gray-50 transition-colors duration-200"
                 >
                     <span className="text-2xl">📨</span>
                     <h1 className="text-black font-poppins text-lg font-semibold">Contact Support</h1>
