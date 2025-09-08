@@ -25,9 +25,20 @@ module.exports = {
         shimmer: {
           "100%": { transform: "translateX(100%)" },
         },
+        float: {
+          "0%, 100%": { transform: "translateY(0px)" },
+          "50%": { transform: "translateY(-20px)" },
+        },
       },
       animation: {
         shimmer: "shimmer 1.5s infinite",
+        float: "float 6s ease-in-out infinite",
+        "float-slow": "float 10s ease-in-out infinite",
+        "float-fast": "float 4s ease-in-out infinite",
+
+        "spin-fast": "spin 1s linear infinite",
+        "spin-slow": "spin 4s linear infinite",
+        "spin-custom": "spin 10s linear infinite",
       },
     },
   },

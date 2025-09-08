@@ -1,69 +1,53 @@
-import { useNavigate } from "react-router-dom";
-import {ReactComponent as HomeOutline} from "../assets/home.svg";
-import {ReactComponent as ProfileOutline} from "../assets/account-circle.svg";
-import {ReactComponent as SettingsOutline} from "../assets/cog.svg";
+import { useNavigate, useLocation } from "react-router-dom";
+import { motion } from "framer-motion";
+import { ReactComponent as HomeOutline } from "../assets/home.svg";
+import { ReactComponent as ProfileOutline } from "../assets/account-circle.svg";
+import { ReactComponent as SettingsOutline } from "../assets/cog.svg";
 
 export default function TabBar() {
+  const navigate = useNavigate();
+  const location = useLocation();
 
-    const navigate = useNavigate();
-    const goToHome = () => {
-        navigate("/home");
-    };
-    const goToProfile = () => {
-        navigate("/profile");
-    };
-    const goToSettings = () => {
-        navigate("/settings");
-    };
+  const tabs = [
+    { path: "/home", label: "Home", icon: HomeOutline },
+    { path: "/profile", label: "Profile", icon: ProfileOutline },
+    { path: "/settings", label: "Settings", icon: SettingsOutline },
+  ];
 
   return (
-    <div className="fixed bottom-0 left-0 w-full h-16 bg-ten flex justify-around items-center shadow-md">
-      
-      {/* Home */}
-      <div 
-        onClick={goToHome}
-        className="relative group flex justify-center items-center gap-2 rounded-2xl p-3 transition-all duration-300 cursor-pointer hover:bg-secondary">
-        <HomeOutline alt="home" className="h-6 w-6 fill-one" />
-        <h1 className="text-one font-poppins hidden md:inline">Home</h1>
-        <div className="absolute -top-10 left-1/2 -translate-x-1/2 
-                        opacity-0 group-hover:opacity-100 
-                        md:hidden bg-ten text-one text-xs
-                        font-poppins px-2 py-1 rounded-lg shadow-lg 
-                        transition-all duration-300">
-          Home
-        </div>
-      </div>
+    <div className="fixed bottom-0 left-0 w-full h-16 bg-ten flex justify-around items-center shadow-md z-50">
+      {tabs.map((tab) => {
+        const Icon = tab.icon;
+        const active = location.pathname === tab.path;
 
-      {/* Profile */}
-      <div
-        onClick={goToProfile} 
-        className="relative group flex justify-center items-center gap-2 rounded-2xl p-3 transition-all duration-300 cursor-pointer hover:bg-secondary">
-        <ProfileOutline alt="profile" className="h-6 w-6 fill-one" />
-        <h1 className="text-one font-poppins hidden md:inline">Profile</h1>
-        <div className="absolute -top-10 left-1/2 -translate-x-1/2 
-                        opacity-0 group-hover:opacity-100 
-                        md:hidden bg-ten text-one text-xs 
-                        font-poppins px-2 py-1 rounded-lg shadow-lg 
-                        transition-all duration-300">
-          Profile
-        </div>
-      </div>
+        return (
+          <div
+            key={tab.path}
+            onClick={() => navigate(tab.path)}
+            className="relative flex items-center md:flex-row flex-col justify-center cursor-pointer px-4 py-2 min-w-[80px] md:min-w-[100px]" // ✅ force consistent width
+          >
+            {active && (
+              <motion.div
+                layoutId="active-pill"
+                className="absolute inset-0 bg-six rounded-full"
+                transition={{ type: "spring", stiffness: 400, damping: 30 }}
+              />
+            )}
 
-      {/* Settings */}
-      <div
-        onClick={goToSettings}
-        className="relative group flex justify-center items-center gap-2 rounded-2xl p-3 transition-all duration-300 cursor-pointer hover:bg-secondary">
-        <SettingsOutline alt="settings" className="h-6 w-6 fill-one" />
-        <h1 className="text-one font-poppins hidden md:inline">Settings</h1>
-        <div className="absolute -top-10 left-1/2 -translate-x-1/2 
-                        opacity-0 group-hover:opacity-100 
-                        md:hidden bg-ten text-one text-xs 
-                        font-poppins px-2 py-1 rounded-lg shadow-lg 
-                        transition-all duration-300">
-          Settings
-        </div>
-      </div>
-
+            <div
+              className={`relative z-10 flex items-center md:flex-row flex-col gap-1 md:gap-2 transition-all duration-300
+                ${active ? "text-two" : "font-poppins text-three"}`}
+            >
+              <Icon
+                alt={tab.label}
+                className={`h-6 w-6 transition-colors duration-300 
+                  ${active ? "fill-one" : "fill-three"}`}
+              />
+              <span className="text-xs md:text-sm font-poppins">{tab.label}</span>
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 }

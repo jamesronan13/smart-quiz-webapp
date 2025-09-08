@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { sendPasswordResetEmail } from "firebase/auth";
 import { auth } from "../firebase/firebaseConfig";
 import EmailIcon from "../assets/email.svg";
+import IconBackground from "./IconBackground";
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState("");
@@ -70,8 +71,11 @@ export default function ForgotPassword() {
 
   if (success) {
     return (
-      <div className="h-screen w-screen bg-one flex flex-col justify-center items-center">
-        <div className="bg-three md:p-20 p-8 rounded-3xl shadow-xl flex flex-col justify-center items-center max-w-md">
+      <div className="relative h-screen w-screen flex flex-col justify-center items-center">
+
+        <IconBackground className="absolute -z-0" />
+
+        <div className="bg-three md:p-20 p-8 rounded-3xl shadow-xl flex flex-col justify-center items-center max-w-md absolute z-1">
           <div className="text-center mb-6">
             <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -83,7 +87,7 @@ export default function ForgotPassword() {
               We've sent a password reset link to <strong>{email}</strong>. 
               Please check your email and follow the instructions to reset your password.
             </p>
-            <p className="font-poppins text-nine text-xs md:text-sm text-gray-600 mb-6">
+            <p className="font-poppins text-nine text-xs md:text-sm mb-6">
               Don't see the email? Check your spam folder or try again.
             </p>
           </div>
@@ -112,8 +116,11 @@ export default function ForgotPassword() {
   }
 
   return (
-    <div className="h-screen w-screen bg-one flex flex-col justify-center items-center">
-      <div className="bg-three md:p-20 p-8 rounded-3xl shadow-xl flex flex-col justify-center items-center">
+    <div className="relative h-screen w-screen flex flex-col justify-center items-center">
+
+      <IconBackground className="absolute -z-0" />
+
+      <div className="bg-three md:p-20 p-8 rounded-3xl shadow-xl flex flex-col justify-center items-center absolute z-1">
         <h1 className="font-poppins text-nine text-4xl md:text-5xl font-bold mb-2">Reset Password</h1>
         <p className="font-poppins text-nine text-md md:text-xl mb-6 text-center">
           Enter your registered email address and we'll send you a reset link
@@ -162,17 +169,6 @@ export default function ForgotPassword() {
           </div>
         </form>
 
-        <div className="mt-6 text-center">
-          <p className="font-poppins text-nine text-xs md:text-sm text-gray-600 leading-relaxed">
-            Remember your password?{" "}
-            <span 
-              onClick={goToLogin}
-              className="text-blue-600 hover:underline cursor-pointer font-medium"
-            >
-              Sign in here
-            </span>
-          </p>
-        </div>
       </div>
     </div>
   );

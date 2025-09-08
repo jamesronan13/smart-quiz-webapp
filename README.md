@@ -1,70 +1,171 @@
-# Getting Started with Create React App
+# PC-4121 [Sigm4 : Study Quiz]
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![Project Banner](./frontend/public/Banner.png)
 
-## Available Scripts
+## Table of Contents
 
-In the project directory, you can run:
+- [Introduction](#introduction)
+- [Project Overview](#project-overview)
+- [Objectives](#objectives)
+- [Features](#features)
+- [Technologies Used](#technologies-used)
+- [Setup and Installation](#setup-and-installation)
+- [Usage Instructions](#usage-instructions)
+- [Project Structure](#project-structure)
+- [Contributors](#contributors)
+- [Chagelog](#changelog)
+- [Acknowledgments](#acknowledgments)
+- [License](#license)
 
-### `npm start`
+---
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Introduction
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Assistive technology is a device, software, or system that helps individuals with disabilities perform functions that might otherwise be difficult or impossible. Therefore, we developed "narrAIte," an assistive technology designed to support and benefit blind people. This innovation aims to enhance accessibility and provide a more inclusive experience, particularly for individuals with visual impairments, by utilizing technology to address their unique needs.
 
-### `npm test`
+## Project Overview
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+narrAIte automatically creates and narrates stories based on visual inputs by combining text-to-speech and image recognition technology. This enables blind youngsters to interact meaningfully with visual content by converting still images into dynamic audio narratives. It shows how artificial intelligence may be used to develop inclusive digital solutions that provide people with disabilities more authority.
 
-### `npm run build`
+## Objectives
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- Develop a solution for [Visually Impaired Inclusivity].
+- Implement features to [make a story that can be understand by impaired].
+- Test and validate [Image to Speech].
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Features
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- Accessible: Account is not needed.
+- Free Resources: Collections Tab offers series of photos that the user can use.
+- Audible: Crafted Stories can be heard loud and clear.
 
-### `npm run eject`
+## Technologies Used
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- Programming Languages: Python, JavaScript, HTML, TailwindCSS
+- Frameworks/Libraries: React, FastAPI
+- Databases: Firebase Storage
+- Other Tools: MistralAI, CoquiTTS, gTTS
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Setup and Installation
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Step-by-step instructions for setting up the project locally.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/thebadsektor/tc3202-3a-8.git
+   ```
+2. **Install dependencies:**
+   - If using `npm`:
+   ```bash
+   cd frontend
+   ```
+   ```bash
+   npm install
+   ```
+   - If using `pip` (for Python projects):
+   ```bash
+   cd backend
+   ```
+   ```bash
+   pip install -r requirements.txt
+   ```
+3. **Configure environment variables (if any)**: Provide instructions for setting up .env files or any other required configurations.
+   ```bash
+   python3.11 -m venv venv
+   ```
+   ```bash
+   source venv/Scripts/activate
+   ```
+4. **Run the project:**
+   - For web projects:
+   ```bash
+   npm start
+   ```
+   - IFor backend services:
+   ```bash
+   uvicorn main:app --reload
+   ```
 
-## Learn More
+## Usage Instructions
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- Once the Landing page is shown, Click "Get Started".
+- Choose your story language.
+- Upload your desired image.
+- Optional: The user can choose from our Collections Tab
+- Click "Generate" and wait for the process.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Project Structure
 
-### Code Splitting
+Explain the structure of the project directory. Example:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+```bash
+.
+├── 📂 backend/
+│   ├── .gitignore
+│   ├── main.py
+│   └── requirements.txt
+├── 📂 frontend/
+│   ├──📂 public/
+│   │   ├── Banner.png
+│   │   ├── index.html
+│   │   ├── LogoWithBorder.svg
+│   ├── 📂 src/
+│   │   ├── 📂 animations/
+│   │   │    └── <animations>
+│   │   ├── 📂 assets/
+│   │   │    └── <pictures>
+│   │   ├── 📂 components/
+│   │   │    └── <component>
+│   │   ├── 📂 pages/
+│   │   │    └── <page>
+│   │   ├── 📂 styles/
+│   │   │    └── <cssfile>
+│   │   └── ...
+│   ├── .gitignore
+│   └── package-lock.json
+│   └── package.json
+│   └── postcss.config.js
+│   └── tailwind.config.js
+└── README.md
+```
 
-### Analyzing the Bundle Size
+## Contributors
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+List all the team members involved in the project. Include their roles and responsibilities:
 
-### Making a Progressive Web App
+- **Sam Gabriel Advento**: Lead Developer, Backend Developer
+- **Sam Gabriel Advento & Jay Ann Castillo**: Frontend Developer, UI/UX Designer
+- **Jay Ann Castillo & Faith Cruz & Carlos Cortez**: Documentators
+- **Gerald Villaran**: Course Instructor
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## Project Timeline
 
-### Advanced Configuration
+Outline the project timeline, including milestones or deliverables. Example:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+- **Week 1-3 (Feb 3)**: Concept Paper Proposal
+- **Week 3-5 (Feb 25)** : Consultation
+- **Week 5-6 (March 10)** : Plan User Journey and Refinement
+- **Week 7-8 (March 12)** : Research
+- **Week 8-9 (March 18)** : Repository Preparation
+- **Week 9-10 (March 24)** : Frontend Coding
+- **Week 11-14 (March 31)** : Backend Coding and Major to Minor Changes
+- **Week 16-18 (April 21)** : Dataset Preparation
+- **Week 18 (May 8)** : Model Training
+- **Week 19 (May 13)** : Checking
 
-### Deployment
+## Changelog
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+### [Version 1.0.0] - 2025-05-13
 
-### `npm run build` fails to minify
+- Initial release of the project.
+- Added basic functionality for Collections and Upload Section.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Acknowledgments
+
+Acknowledge any resources, mentors, or external tools that helped in completing the project.
+
+This project was built from [narrAIte](https://github.com/sxmgxbrxxl/narrAIte.git), created by [Sam Gabriel Advento]. You can view the original repository [here](https://github.com/sxmgxbrxxl/narrAIte.git).
+
+## License
+
+Specify the project's license. For starters, adapt the license of the original repository.

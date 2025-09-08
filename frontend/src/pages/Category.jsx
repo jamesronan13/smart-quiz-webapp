@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { db } from "../firebase/firebaseConfig";
 import { collection, getDocs } from "firebase/firestore";
+import IconBackground from "./IconBackground";
 
 export default function Category() {
     const navigate = useNavigate();
@@ -135,8 +136,14 @@ export default function Category() {
     }
 
     return (
-        <div className="h-screen w-screen bg-white flex flex-col justify-center items-center">
-            <h1 className="font-poppins font-bold text-nine text-3xl text-primary mb-10">Choose a Category</h1>
+        <div className="relative h-screen w-screen flex flex-col justify-center items-center">
+
+            <IconBackground className="absolute -z-0" />
+
+            <h1 className="font-poppins font-bold text-nine text-3xl text-primary mb-2">Choose a Category</h1>
+            <p className="font-poppins text-md text-nine mb-4">
+                    Click on any available category to start your quiz!
+            </p>
 
             <div className="grid grid-cols-2 gap-6 mt-4 text-center max-w-md w-full px-4">
                 <div 
@@ -183,15 +190,6 @@ export default function Category() {
                     )}
                 </div> 
             </div> 
-
-            <div className="mt-6 text-center max-w-md px-4">
-                <p className="font-poppins text-sm text-gray-600">
-                    {Object.values(availableCategories).filter(Boolean).length === 0 
-                        ? "No quiz categories are currently available. Please check your Firebase setup."
-                        : "Click on any available category to start your quiz!"
-                    }
-                </p>
-            </div>
 
             <button  
                 onClick={() => navigate("/home")} 

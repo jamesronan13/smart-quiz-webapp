@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "../firebase/firebaseConfig";
 import { doc, getDoc, collection, getDocs, query, orderBy } from "firebase/firestore"; 
+import { motion } from "framer-motion";
+import { fadeInLeft, fadeInRight } from "../animations/variants";
 import TabBar from "../components/TabBar";
 import Logo from "../assets/simplelogo.svg";
 
@@ -10,6 +12,8 @@ export default function Home() {
   const [user, loading] = useAuthState(auth);
   const [firstName, setFirstName] = useState("");
   const [loadingName, setLoadingName] = useState(true);
+  const [showTabBar, setShowTabBar] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
   const [dashboardData, setDashboardData] = useState({
     totalQuizzes: 0,
     averageScore: 0,
@@ -22,6 +26,28 @@ export default function Home() {
   const goToCategory = () => {
     navigate("/category");
   };
+
+ useEffect(() => {
+  const handleScroll = () => {
+    const currentScrollY = window.scrollY;
+    const windowHeight = window.innerHeight;
+    const documentHeight = document.documentElement.scrollHeight;
+    const isAtBottom = currentScrollY + windowHeight >= documentHeight - 50;
+
+    if (isAtBottom) {
+      setShowTabBar(true); 
+    } else if (currentScrollY > lastScrollY) {
+      setShowTabBar(false); 
+    } else {
+      setShowTabBar(true);
+    }
+
+    setLastScrollY(currentScrollY);
+  };
+
+  window.addEventListener("scroll", handleScroll);
+  return () => window.removeEventListener("scroll", handleScroll);
+}, [lastScrollY]);
 
   // 🔹 Fetch firstName
   useEffect(() => {
@@ -150,14 +176,12 @@ export default function Home() {
   }
 
   return (
-    <div className="bg-white h-screen w-screen p-4 md:p-8 flex flex-col pb-16 overflow-hidden">
+    <div className="bg-white min-h-screen w-screen md:h-screen p-4 md:p-8 flex flex-col pb-12">
 
-      {/* Grid Layout: left small column, right wide dashboard */}
-      <div className="flex-1 grid grid-cols-1 md:grid-cols-3 gap-6 overflow-hidden pb-16">
+      <div className="flex-1 grid grid-cols-1 md:grid-cols-3 gap-6 overflow-hidden pb-8">
 
-        {/* Left Column (Welcome + Start Quiz) */}
-        <div className="flex flex-col gap-6">
-          {/* Welcome */}
+        <motion.div {...fadeInLeft} className="flex flex-col gap-6">
+      
           <div className="bg-two p-6 md:p-8 rounded-2xl shadow-md">
             {loadingName ? (
               <div className="relative h-8 w-44 rounded-lg bg-two overflow-hidden mb-2">
@@ -169,12 +193,18 @@ export default function Home() {
                 Welcome, {firstName ? firstName + "!" : "User!"}
               </p>
             )}
+            {loadingName ? (
+              <div className="relative h-8 w-44 rounded-lg bg-two overflow-hidden mb-2">
+                <div className="absolute inset-0 -translate-x-full animate-[shimmer_1.5s_infinite] 
+                  bg-gradient-to-r from-transparent via-white/60 to-transparent"></div>
+              </div>
+            ) : (
             <p className="font-poppins text-six text-md md:text-lg">
               Ready to test your brainpower?
             </p>
+            )}
           </div>
 
-          {/* Start Quiz */}
           <div className="relative flex flex-col justify-center items-center rounded-3xl shadow-lg overflow-hidden p-6 bg-five h-full">
             <div 
               className="absolute inset-0"
@@ -189,7 +219,7 @@ export default function Home() {
             ></div>
             <div className="relative z-10 text-center">
               <h1 className="font-poppins font-bold text-one text-3xl md:text-4xl mb-2">
-                Sigm4 : Smart Quiz
+                Sigm4 : Study Quiz
               </h1>
               <p className="text-one font-poppins italic mb-6">
                 Your journey to smarter learning starts here.
@@ -202,13 +232,19 @@ export default function Home() {
               </button>
             </div>
           </div>
-        </div>
-
-        {/* Right Column (Dashboard, wider) */}
-        <div className="md:col-span-2 bg-two p-6 rounded-2xl scrollbar-hide shadow-md flex flex-col overflow-hidden">
+        </motion.div>
+        
+        <motion.div {...fadeInRight} className="md:col-span-2 h-screen w-full bg-two p-6 md:h-full md:w-full rounded-3xl scrollbar-hide shadow-md flex flex-col overflow-hidden">
+          {loadingName ? (
+              <div className="relative h-8 w-44 rounded-lg bg-two overflow-hidden mb-2">
+                <div className="absolute inset-0 -translate-x-full animate-[shimmer_1.5s_infinite] 
+                  bg-gradient-to-r from-transparent via-white/60 to-transparent"></div>
+              </div>
+            ) : (
           <p className="font-poppins font-bold text-six text-2xl md:text-4xl mb-4">
             Dashboard
           </p>
+            )}
 
           <div className="flex-1 overflow-y-auto">
             {dashboardData.loading ? (
@@ -217,21 +253,21 @@ export default function Home() {
               </div>
             ) : (
               <div className="space-y-4">
-                {/* Quick Stats */}
+
                 <div className="grid grid-cols-2 gap-4">
-                  <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-100">
+                  <div className="bg-one p-4 rounded-xl shadow-sm border border-gray-100">
                     <p className="font-poppins text-gray-600 text-sm">Total Quizzes</p>
                     <p className="font-poppins font-bold text-six text-2xl">{dashboardData.totalQuizzes}</p>
                   </div>
-                  <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-100">
+                  <div className="bg-one p-4 rounded-xl shadow-sm border border-gray-100">
                     <p className="font-poppins text-gray-600 text-sm">Average Score</p>
                     <p className="font-poppins font-bold text-six text-2xl">{dashboardData.averageScore}%</p>
                   </div>
                 </div>
 
-                {/* Category Performance */}
+
                 {Object.keys(dashboardData.categoryStats).length > 0 && (
-                  <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-100">
+                  <div className="bg-one p-4 rounded-xl shadow-sm border border-gray-100">
                     <h3 className="font-poppins font-semibold text-six text-lg mb-3">Category Performance</h3>
                     <div className="space-y-2">
                       {Object.entries(dashboardData.categoryStats).map(([category, stats]) => (
@@ -254,9 +290,8 @@ export default function Home() {
                   </div>
                 )}
 
-                {/* Recent Quizzes */}
                 {dashboardData.recentQuizzes.length > 0 && (
-                  <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-100">
+                  <div className="bg-one p-4 rounded-xl shadow-sm border border-gray-100">
                     <h3 className="font-poppins font-semibold text-six text-lg mb-3">Recent Quizzes</h3>
                     <div className="space-y-3">
                       {dashboardData.recentQuizzes.map((quiz, index) => (
@@ -285,7 +320,7 @@ export default function Home() {
                 )}
 
                 {dashboardData.totalQuizzes === 0 && (
-                  <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 text-center">
+                  <div className="bg-one p-6 rounded-xl shadow-sm border border-gray-100 text-center">
                     <div className="text-4xl mb-2">📊</div>
                     <p className="font-poppins text-gray-600 text-sm mb-2">No quiz data yet</p>
                     <p className="font-poppins text-gray-500 text-xs">Take your first quiz to see your progress here!</p>
@@ -294,11 +329,19 @@ export default function Home() {
               </div>
             )}
           </div>
-        </div>
+        </motion.div>
       </div>
 
-      {/* Bottom Nav */}
-      <div className="fixed bottom-0 left-0 w-full h-16 z-50 bg-white shadow-md">
+      <motion.div
+        initial={{ y: 0 }}
+        animate={{ y: showTabBar ? 0 : 100 }}
+        transition={{ type: "spring", stiffness: 300, damping: 30 }}
+        className="md:hidden fixed bottom-0 left-0 w-full bg-white shadow-lg"
+      >
+        <TabBar />
+      </motion.div>
+
+      <div className="hidden md:block w-full max-w-4xl mx-auto mt-8">
         <TabBar />
       </div>
     </div>

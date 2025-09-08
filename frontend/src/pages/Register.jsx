@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 import { auth, db } from "../firebase/firebaseConfig";
+import IconBackground from "./IconBackground";
 import EmailIcon from "../assets/email.svg";
 import PasswordIcon from "../assets/lock.svg";
 
@@ -74,8 +75,11 @@ export default function Register() {
   };
 
   return (
-    <div className="h-screen w-screen bg-one flex flex-col justify-center items-center p-4">
-      <div className="bg-three md:p-20 p-8 rounded-3xl shadow-xl flex flex-col justify-center items-center w-full max-w-md">
+    <div className="relative h-screen w-screen flex flex-col justify-center items-center p-4">
+
+      <IconBackground className="absolute -z-0 "/>
+
+      <div className="bg-three md:p-20 p-8 rounded-3xl shadow-xl flex flex-col justify-center items-center w-full max-w-md absolute z-1">
         <p className="font-poppins font-bold text-nine text-lg md:text-xl">Welcome to</p>
         <h1 className="font-poppins text-nine text-4xl md:text-5xl font-bold mb-6">Study Quiz</h1>
         <p className="font-poppins text-nine text-md md:text-xl mb-4">Create your account</p>
@@ -182,13 +186,19 @@ export default function Register() {
               {loading ? "Creating Account..." : "Sign Up"}
             </button>
 
-            <button
-              type="button"
-              onClick={goToLogin}
-              className="bg-one text-nine font-bold font-poppins w-full py-2 rounded-lg hover:bg-gray-200 transition-colors"
-            >
-              Already have an account? Log In
-            </button>
+            <div className="flex flex-row gap-1">
+
+              <p className="font-poppins text-nine text-sm">
+                Already have an account?
+              </p>
+
+              <p 
+                onClick={goToLogin}
+                className="font-poppins text-nine text-sm hover:underline cursor-pointer">
+                Log In
+              </p>
+            </div>
+           
           </div>
         </form>
       </div>

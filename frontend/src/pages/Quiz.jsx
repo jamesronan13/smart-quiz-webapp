@@ -18,6 +18,7 @@ export default function Quiz() {
     const [error, setError] = useState(null);
     const [isSaving, setIsSaving] = useState(false);
     const [quizStartTime, setQuizStartTime] = useState(null);
+    const [showQuitDialog, setShowQuitDialog] = useState(false);
     
     // Timer states
     const [timeLeft, setTimeLeft] = useState(15);
@@ -298,21 +299,6 @@ export default function Quiz() {
         }
     };
 
-    const handlePrevious = () => {
-        if (currentQuestion > 0) {
-            stopTimer();
-            
-            // Save current answer before going back
-            const newAnswers = [...userAnswers];
-            newAnswers[currentQuestion] = selectedAnswer;
-            setUserAnswers(newAnswers);
-            
-            setCurrentQuestion(currentQuestion - 1);
-            // Load the previous answer
-            setSelectedAnswer(newAnswers[currentQuestion - 1] || "");
-        }
-    };
-
     const saveQuizResult = async (finalScore, finalAnswers) => {
         try {
             setIsSaving(true);
@@ -489,7 +475,7 @@ export default function Quiz() {
                             Try Again
                         </button>
                         <button 
-                            onClick={goToCategories}
+                            onClick={showQuitDialog}
                             className="block w-full bg-gray-500 hover:bg-gray-600 text-white font-poppins font-medium px-6 py-3 rounded-xl transition-all duration-200"
                         >
                             Back to Categories
@@ -509,7 +495,7 @@ export default function Quiz() {
                         No questions available for {getDisplayCategory()}
                     </p>
                     <button 
-                        onClick={goToCategories}
+                        onClick={setShowQuitDialog}
                         className="bg-gradient-to-r from-indigo-500 to-indigo-600 hover:from-indigo-600 hover:to-indigo-700 text-white font-poppins font-medium px-6 py-3 rounded-xl transition-all duration-200 transform hover:scale-105"
                     >
                         Back to Categories
@@ -725,17 +711,6 @@ export default function Quiz() {
 
                     {/* Navigation Buttons */}
                     <div className="flex justify-between">
-                        <button 
-                            onClick={handlePrevious}
-                            disabled={currentQuestion === 0}
-                            className={`font-poppins font-medium px-6 py-3 rounded-xl transition-all duration-200 ${
-                                currentQuestion === 0 
-                                    ? "bg-gray-200 text-gray-400 cursor-not-allowed" 
-                                    : "bg-gray-500 hover:bg-gray-600 text-white transform hover:scale-105 shadow-lg"
-                            }`}
-                        >
-                            Previous
-                        </button>
 
                         <button 
                             onClick={handleNext}
@@ -757,13 +732,43 @@ export default function Quiz() {
             <div className="bg-white px-6 py-4 border-t border-gray-200 shadow-lg">
                 <div className="flex justify-center">
                     <button 
-                        onClick={goToCategories}
+                        onClick={setShowQuitDialog}
                         className="bg-gray-500 hover:bg-gray-600 text-white font-poppins font-medium px-4 py-2 rounded-xl transition-all duration-200 text-sm transform hover:scale-105"
                     >
                         Back to Categories
                     </button>
                 </div>
             </div>
+
+            {showQuitDialog && (
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+                    <div className="bg-white rounded-2xl shadow-lg p-6 w-11/12 max-w-sm">
+                        <h2 className="text-xl font-bold text-center mb-4 font-poppins">
+                        Warning
+                        </h2>
+                        <p className="text-gray-600 text-center mb-6 font-poppins">
+                        Are you sure you want to quit? Your progress will be lost.
+                        </p>
+                        <div className="flex gap-4 justify-center">
+                        <button
+                            onClick={() => setShowQuitDialog(false)}
+                            className="px-6 py-2 bg-gray-200 text-black rounded-full font-poppins font-semibold hover:bg-gray-300 transition"
+                        >
+                            No
+                        </button>
+                        <button
+                            onClick={() => {
+                            setShowQuitDialog(false);
+                            goToCategories();
+                            }}
+                            className="px-6 py-2 bg-red-500 text-white rounded-full font-poppins font-semibold hover:bg-red-600 transition"
+                        >
+                            Yes
+                        </button>
+                        </div>
+                    </div>
+                </div>
+            )}    
         </div>
     );
 }

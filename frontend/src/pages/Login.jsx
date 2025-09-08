@@ -2,8 +2,10 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase/firebaseConfig";
+import IconBackground from "../pages/IconBackground";
 import EmailIcon from "../assets/email.svg";
 import PasswordIcon from "../assets/lock.svg";
+import { Icon } from "lucide-react";
 
 export default function Login() {
   const [formData, setFormData] = useState({
@@ -75,8 +77,11 @@ export default function Login() {
   };
 
   return (
-    <div className="h-screen w-screen bg-one flex flex-col justify-center items-center">
-      <div className="bg-three md:p-20 p-8 rounded-3xl shadow-xl flex flex-col justify-center items-center">
+    <div className="relative h-screen w-screen  flex flex-col justify-center items-center">
+      
+      <IconBackground className="absolute -z-0" />
+
+      <div className="bg-three md:p-20 p-8 rounded-3xl shadow-xl flex flex-col justify-center items-center absolute z-1">
         <p className="font-poppins font-bold text-nine text-lg md:text-xl">Welcome to</p>
         <h1 className="font-poppins text-nine text-4xl md:text-5xl font-bold mb-6">Study Quiz</h1>
         <p className="font-poppins text-nine text-md md:text-xl mb-4">Sign in to your account</p>
