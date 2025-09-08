@@ -5,7 +5,6 @@ import { auth } from "../firebase/firebaseConfig";
 import IconBackground from "../pages/IconBackground";
 import EmailIcon from "../assets/email.svg";
 import PasswordIcon from "../assets/lock.svg";
-import { Icon } from "lucide-react";
 
 export default function Login() {
   const [formData, setFormData] = useState({
