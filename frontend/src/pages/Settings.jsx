@@ -3,7 +3,7 @@ import TabBar from "../components/TabBar";
 import AboutModal from "../components/AboutModal";
 import ContactModal from "../components/ContactModal";
 import TermsModal from "../components/TermsModal";
-import { fadeInUp } from "../animations/variants";
+import { fadeInUp } from "../animations/Animations";
 import { motion } from "framer-motion";
 import IconBackground from "./IconBackground";
 

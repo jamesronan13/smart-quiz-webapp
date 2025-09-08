@@ -4,7 +4,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "../firebase/firebaseConfig";
 import { doc, getDoc, collection, getDocs, query, orderBy } from "firebase/firestore"; 
 import { motion } from "framer-motion";
-import { fadeInLeft, fadeInRight } from "../animations/variants";
+import { fadeInLeft, fadeInRight } from "../animations/Animations";
 import TabBar from "../components/TabBar";
 import Logo from "../assets/simplelogo.svg";
 
